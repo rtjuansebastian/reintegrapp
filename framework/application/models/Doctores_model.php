@@ -7,6 +7,7 @@ class Doctores_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model("usuarios_model");
     }
     
     public function guardar_doctor($data)
@@ -26,15 +27,15 @@ class Doctores_model extends CI_Model
             );
 
             $this->db->insert('doctores', $data_doctor);   
-            
+                        
             $data_usuario = array(
                 'usuario' => $data['usuario'] ,
                 'rol' => "1" ,
                 'cedula' => $data['cedula'] ,
-               'password' => $data['password']
+                'password' => $data['password']
             );
 
-            $this->db->insert('usuarios', $data_usuario); 
+            $this->usuarios_model->agregar_usuario($data_usuario);
             
             $respuesta["error"]=FALSE;
             $respuesta['mensaje']="Usuario creado exitosamente";
