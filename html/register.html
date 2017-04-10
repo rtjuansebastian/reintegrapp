@@ -16,6 +16,7 @@ and open the template in the editor.
         <script src="http://localhost/reintegrapp/assets/js/jquery-3.2.0.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/jquery.mobile-1.4.5.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.validate.min.js"></script>
     </head>
     <body>        
         <div class="container">      
@@ -45,63 +46,71 @@ and open the template in the editor.
                         </div> 
                         <div class="form-group">
                             <h3></h3>
-                            <input type="button" id="guardar" class="btn btn-success boton_completo" value="Guardar" style="font-size: 20pt"/>
+                            <input type="submit" id="guardar" class="btn btn-success boton_completo" value="Guardar" style="font-size: 20pt"/>
                         </div>                         
                     </form>
                 </div>
-                <div id="error">
-                    
-                </div>
             </div>
-        </div>
+        </div>      
         <div class="container">
             <footer class="text-center">Universidad distrital Francisco Jose de Caldas 2016</footer>
-        </div>           
+        </div>
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Reintegrapp</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="error"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
     </body>
     <script>
-        $(document).ready(function(){
-            $("#guardar").click(function(){
-                var dataString = $('#crear_doctor').serialize(); 
-                $.ajax(
-                {
-                    type: "POST",
-                    data: dataString,
-                    url: "http://localhost/reintegrapp/framework/index.php/doctores/guardar_doctor",
-                    success:function(data)
-                    {
-                        var result=$.parseJSON(data);                        
-                        if(result.error===false)
+        $(document).ready(function () {
+            $("#crear_doctor").validate({
+                    rules: {
+                        cedula: { required: true, minlength: 2},
+                        nombre: { required: true, minlength: 2},
+                        usuario: { required:true, minlength: true},
+                        password: { minlength: 2, maxlength: 15}
+                    },
+                    messages: {
+                        cedula: "Debe introducir su cedula.",
+                        nombre: "Debe introducir su nombre.",
+                        usuario : "Debe introducir su usuario.",
+                        password : "Debe introducir su contraseña."
+                    },
+                    submitHandler: function(form){
+                        var dataString = $('#crear_doctor').serialize();
+                        $.ajax(
                         {
-                            $("#error").html("<p class=\"bg-success\">"+result.mensaje+"</p>");
-                            setTimeout(
-                            function() 
+                            type: "POST",
+                            data: dataString,
+                            url: "http://localhost/reintegrapp/framework/index.php/doctores/guardar_doctor",
+                            success: function (data)
                             {
-                              window.location("login.html");
-                            }, 2000);                            
-                        }
-                        else
-                        {
-                            var html='<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'+
-                                        '<div class="modal-dialog modal-sm" role="document">'+
-                                          '<div class="modal-content">'+
-                                            '<div class="modal-header">'+
-                                                '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-                                                '<h4 class="modal-title" id="myModalLabel">Reintegrapp</h4>'+
-                                              '</div>'+
-                                              '<div class="modal-body">'+
-                                                ''+result.mensaje+''+
-                                              '</div>'+
-                                              '<div class="modal-footer">'+
-                                                '<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>'+
-                                              '</div>'+
-                                          '</div>'+
-                                        '</div>'+
-                                      '</div>';
-                            $("#error").html(html);
-                            $('.bs-example-modal-sm').modal('show');
-                        }
+                                var result = $.parseJSON(data);
+                                if (result.error === false)
+                                {
+                                    $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
+                                    $('.bs-example-modal-sm').modal('show');
+                                    setTimeout("location.href='login.html'", 4000);
+                                } 
+                                else
+                                {
+                                    $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
+                                    $('.bs-example-modal-sm').modal('show');
+                                }
+                            }
+                        });
                     }
-                });                
             });
         });
     </script>
