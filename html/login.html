@@ -17,6 +17,7 @@ and open the template in the editor.
         <script src="http://localhost/reintegrapp/assets/js/jquery.mobile-1.4.5.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/jquery.validate.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.cookie.js"></script>
     </head>
     <body>        
         <div class="container">      
@@ -83,6 +84,10 @@ and open the template in the editor.
                                 var result = $.parseJSON(data);
                                 if (result.error === false)
                                 {
+                                    var date= new Date();
+                                    var minutes= 120;
+                                    date.setTime(date.getTime()+(minutes * 60 *1000));                         
+                                    $.cookie('sesion',result.acceso.logged_in,{expires: date});
                                     $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
                                     $('.bs-example-modal-sm').modal('show');
                                     setTimeout("location.href='pacientes.html'", 4000);

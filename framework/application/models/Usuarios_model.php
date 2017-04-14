@@ -26,9 +26,9 @@ class Usuarios_model extends CI_Model
         
         if($validacion)
         {
-            $this->usuarios_model->crear_sesion($usuario);
+            $respuesta['acceso']=$this->usuarios_model->crear_sesion($usuario);
             $respuesta['mensaje']="Bienvenido ".$usuario;
-            $respuesta['error']=FALSE;
+            $respuesta['error']=FALSE;            
         }
         else {
             $respuesta['mensaje']="Datos incorrectos";
@@ -69,7 +69,7 @@ class Usuarios_model extends CI_Model
                 'logged_in' => TRUE
            );
 
-        $this->session->set_userdata('sesion',$acceso);         
+           return $acceso;         
     }
     
     public function traer_usuarios()
@@ -131,4 +131,6 @@ class Usuarios_model extends CI_Model
             return FALSE;
         }
     }
+    
+
 }    
