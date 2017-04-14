@@ -12,7 +12,7 @@ class Usuarios_model extends CI_Model
     public function valida_login($usuario,$contraseña)
     {
         $validacion=FALSE;        
-        
+        $respuesta=array();
         $this->db->where('usuario',$usuario);
         $query=$this->db->get('usuarios');
 
@@ -21,10 +21,21 @@ class Usuarios_model extends CI_Model
             $row=$query->row();
             $hash=$row->password;            
             
-            $validacion = $this->login_model->validate_pass($hash, $contraseña);
+            $validacion = $this->usuarios_model->validate_pass($hash, $contraseña);
         }        
         
-        return $validacion;
+        if($validacion)
+        {
+            $this->usuarios_model->crear_sesion($usuario);
+            $respuesta['mensaje']="Bienvenido ".$usuario;
+            $respuesta['error']=FALSE;
+        }
+        else {
+            $respuesta['mensaje']="Datos incorrectos";
+            $respuesta['error']=TRUE;
+        }
+        
+        return $respuesta;
     }
 
  
@@ -105,5 +116,19 @@ class Usuarios_model extends CI_Model
     {
         $this->db->where('usuario', $usuario);
         $this->db->delete('usuarios');       
+    }
+    
+    public function validar_usuario($usuario)
+    {
+        $this->db->where("usuario",$usuario);
+        $query=$this->db->get("usuarios");
+        if($query->num_rows()>0)
+        {
+            return TRUE;
+        }
+        else 
+        {
+            return FALSE;
+        }
     }
 }    

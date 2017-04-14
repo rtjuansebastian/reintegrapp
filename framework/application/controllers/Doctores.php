@@ -17,4 +17,11 @@ class Doctores extends CI_Controller {
         $respuesta=  $this->doctores_model->guardar_doctor($data);
         echo json_encode($respuesta);
     }
+    
+    public function login()
+    {
+        $data=  $this->input->post();
+        $respuesta=$this->usuarios_model->valida_login($data['usuario'],$data['password']);
+        echo json_encode($respuesta);
+    }
 }

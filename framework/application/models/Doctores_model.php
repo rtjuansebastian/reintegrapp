@@ -13,11 +13,12 @@ class Doctores_model extends CI_Model
     public function guardar_doctor($data)
     {
         $respuesta=array();
-        $validar=$this->doctores_model->validar_cedula($data['cedula']);
-        if($validar)
+        $validar_doctor=$this->doctores_model->validar_cedula($data['cedula']);
+        $validar_usuario=$this->usuarios_model->validar_usuario($data['usuario']);
+        if($validar_doctor || $validar_usuario)
         {
             $respuesta['error']=TRUE;
-            $respuesta['mensaje']="Esa cedula ya esta registrada";
+            $respuesta['mensaje']="Esa cedula o ese usaurio ya esta registrado";
         }
         else
         {
@@ -34,9 +35,8 @@ class Doctores_model extends CI_Model
                 'cedula' => $data['cedula'] ,
                 'password' => $data['password']
             );
-
             $this->usuarios_model->agregar_usuario($data_usuario);
-            
+
             $respuesta["error"]=FALSE;
             $respuesta['mensaje']="Usuario creado exitosamente";
         }

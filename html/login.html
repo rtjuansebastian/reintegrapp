@@ -16,13 +16,14 @@ and open the template in the editor.
         <script src="http://localhost/reintegrapp/assets/js/jquery-3.2.0.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/jquery.mobile-1.4.5.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.validate.min.js"></script>
     </head>
     <body>        
         <div class="container">      
             <div class="row">                        
                 <div class="col-md-6 col-md-offset-3">
                     <img src="http://localhost/reintegrapp/assets/img/logo.png" heigth="20" width="100%"/>                           
-                    <form>
+                    <form id="form_login">
                         <div class="form-group">
                             <h2 class="text-center">Usuario</h2>
                             <input type="text" name="usuario" id="" class="form-control"/>
@@ -30,15 +31,73 @@ and open the template in the editor.
                         <div class="form-group">
                             <h2 class="text-center">Contraseña</h2>
                             <input type="password" name="password" id="" class="form-control"/>
-                        </div>                    
+                        </div>
+                        <div class="form-group">
+                            <h3></h3>
+                            <input type="submit" id="guardar" class="btn btn-success boton_completo" value="Entrar" style="font-size: 20pt"/>
+                        </div>                         
                     </form>
                 </div>
             </div>
         </div>
         <div class="container">
             <footer class="text-center">Universidad distrital Francisco Jose de Caldas 2016</footer>
-        </div>           
+        </div>
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Reintegrapp</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="error"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>         
     </body>
+    <script>
+        $(document).ready(function () {
+            $("#form_login").validate({
+                    rules: {
+                        usuario: { required:true, minlength: 2},
+                        password: {required:true, minlength: 2, maxlength: 30}
+                    },
+                    messages: {
+                        usuario : "Debe introducir su usuario.",
+                        password : "Debe introducir su contraseña."
+                    },
+                    submitHandler: function(form){
+                        var dataString = $('#form_login').serialize();
+                        $.ajax(
+                        {
+                            type: "POST",
+                            data: dataString,
+                            url: "http://localhost/reintegrapp/framework/index.php/doctores/login",
+                            success: function (data)
+                            {
+                                var result = $.parseJSON(data);
+                                if (result.error === false)
+                                {
+                                    $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
+                                    $('.bs-example-modal-sm').modal('show');
+                                    setTimeout("location.href='pacientes.html'", 4000);
+                                } 
+                                else
+                                {
+                                    $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
+                                    $('.bs-example-modal-sm').modal('show');
+                                }
+                            }
+                        });
+                    }
+            });
+        });
+    </script>    
 </html> 
 
 
