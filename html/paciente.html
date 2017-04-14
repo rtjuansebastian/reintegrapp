@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Reintegrapp</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/jquery.mobile-1.4.5.css"/>
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/estilos.css"/>
+        <script src="http://localhost/reintegrapp/assets/js/jquery-3.2.0.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.cookie.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.getParams.js"></script>
+    </head>
+    <body>        
+        <div class="container">      
+            <div class="row">                        
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="http://localhost/reintegrapp/assets/img/logo.png" heigth="20" width="100%"/>  
+                    <h2>Cédula</h2>
+                    <p id = "cedula"></p>
+                    
+                    <h2>Nombres</h2>
+                    <p id = "nombres"></p>                   
+                     <h2>Genero</h2>
+                    <p id = "genero"></p>                     
+                     <h2>Edad</h2>
+                    <p id = "edad"></p>                       
+                     <h2>Estado Civil</h2>
+                    <p id = "estado"></p>  
+                    <h2>Escolaridad</h2>
+                    <p id = "escolaridad"></p>                    
+                    <h2>Tiempo Militancia</h2>
+                    <p id = "tiempoMilitancia"></p> 
+                    <h2>Fecha Reintegracion</h2>
+                    <p id = "fechaReintegracion"></p> 
+ 
+                </div>
+            </div>
+        </div>      
+        <div class="container">
+            <footer class="text-center">Universidad distrital Francisco Jose de Caldas 2016</footer>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            var cedula = $.getURLParam("cedula");
+                           $.ajax(
+                        {
+                            type: "POST",
+                            url: "http://localhost/reintegrapp/framework/index.php/pacientes/consultar_paciente?cedula="+cedula,
+                            success: function (data)
+                            {
+                                var result = $.parseJSON(data);
+                                console.log (result);
+                                $('#cedula').html(result.cedula);
+                                $('#nombres').html(result.nombres + " " + result.apellidos);
+                                $('#genero').html(result.genero);
+                                $('#edad').html(result.edad);
+                                $('#estado').html(result.estado);
+                                $('#escolaridad').html(result.nivel);
+                                $('#tiempoMilitancia').html(result.tiempo_militancia + ' Años');                                 
+                                $('#fechaReintegracion').html(result.fecha_reintegracion); 
+                             }
+                        }); 
+   
+   
+   
+   
+        });
+    </script>
+</html> 
