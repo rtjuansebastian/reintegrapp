@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 09, 2017 at 04:21 PM
+-- Generation Time: Apr 14, 2017 at 12:23 PM
 -- Server version: 10.0.29-MariaDB-0ubuntu0.16.04.1
 -- PHP Version: 7.0.15-0ubuntu0.16.04.4
 
@@ -74,6 +74,15 @@ CREATE TABLE `doctores` (
   `nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `doctores`
+--
+
+INSERT INTO `doctores` (`cedula`, `nombre`) VALUES
+('1030522452', 'Edward Daniel Medina'),
+('1121890219', 'Juan Sebastian Rodriguez Tovar'),
+('52824587', 'Maria Fernanda Orjuela');
+
 -- --------------------------------------------------------
 
 --
@@ -84,6 +93,18 @@ CREATE TABLE `escolaridad` (
   `id` int(11) NOT NULL,
   `nivel` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `escolaridad`
+--
+
+INSERT INTO `escolaridad` (`id`, `nivel`) VALUES
+(1, 'Ninguno'),
+(2, 'Primaria sin terminar'),
+(3, 'Primaria '),
+(4, 'Secundaria sin terminar'),
+(5, 'Profesional'),
+(6, 'posgrado');
 
 -- --------------------------------------------------------
 
@@ -107,6 +128,17 @@ CREATE TABLE `estados_civil` (
   `estado` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `estados_civil`
+--
+
+INSERT INTO `estados_civil` (`id`, `estado`) VALUES
+(1, 'Casado'),
+(2, 'union libre'),
+(3, 'Soltero'),
+(4, 'Viudo'),
+(5, 'Divorciado');
+
 -- --------------------------------------------------------
 
 --
@@ -117,6 +149,14 @@ CREATE TABLE `generos` (
   `id` int(11) NOT NULL,
   `genero` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `generos`
+--
+
+INSERT INTO `generos` (`id`, `genero`) VALUES
+(1, 'femenino'),
+(2, 'masculino');
 
 -- --------------------------------------------------------
 
@@ -148,6 +188,13 @@ CREATE TABLE `pacientes` (
   `fecha_reintegracion` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `pacientes`
+--
+
+INSERT INTO `pacientes` (`cedula`, `nombres`, `apellidos`, `genero`, `edad`, `estado_civil`, `escolaridad`, `tiempo_miltancia`, `fecha_reintegracion`) VALUES
+('123456789', 'Juan', 'Timo', 2, 45, 1, 5, 10, '2017-04-14');
+
 -- --------------------------------------------------------
 
 --
@@ -171,6 +218,15 @@ CREATE TABLE `usuarios` (
   `rol` int(11) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `usuarios`
+--
+
+INSERT INTO `usuarios` (`usuario`, `cedula`, `rol`, `password`) VALUES
+('edward', '1030522452', 1, '$2y$11$TEcfTUidl4haZnEl6Rc/Su1fc2kzqDAqmJPkf7Bl.56Qzcrzm6rYe'),
+('juan', '1121890219', 1, '$2y$11$TEcfTUidl4haZnEl6Rc/Su1fc2kzqDAqmJPkf7Bl.56Qzcrzm6rYe'),
+('mafe', '52824587', 1, '$2y$11$TEcfTUidl4haZnEl6Rc/Su1fc2kzqDAqmJPkf7Bl.56Qzcrzm6rYe');
 
 --
 -- Indexes for dumped tables
@@ -281,7 +337,7 @@ ALTER TABLE `diagnosticos_test`
 -- AUTO_INCREMENT for table `escolaridad`
 --
 ALTER TABLE `escolaridad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `estados_cita`
 --
@@ -291,12 +347,12 @@ ALTER TABLE `estados_cita`
 -- AUTO_INCREMENT for table `estados_civil`
 --
 ALTER TABLE `estados_civil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `generos`
 --
 ALTER TABLE `generos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `observaciones_diagnostico`
 --
