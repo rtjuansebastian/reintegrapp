@@ -28,7 +28,19 @@ class Pacientes_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-    
+    public function crear_paciente($data){
+        $respuesta = array();
+        if ($this->db->insert('pacientes', $data)){
+            $respuesta['error'] = false;
+            $respuesta['mensaje'] = "Usuario creado correctamente";
+        }
+        else{
+            $respuesta['error'] = true;
+            $respuesta['mensaje'] = "Error al crear usuario";
+        }
+        return $respuesta;
+        
+    }
     
     
     
