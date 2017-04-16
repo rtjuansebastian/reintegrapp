@@ -41,7 +41,16 @@ class Pacientes_model extends CI_Model
         return $respuesta;
         
     }
-    
+    public function buscar_paciente($cedula){
+        $this->db->select('cedula, nombres, apellidos, generos.genero, estados_civil.estado, escolaridad.nivel, edad, tiempo_militancia, fecha_reintegracion');
+        $this->db->from('pacientes');
+        $this->db->join('generos', 'pacientes.genero = generos.id');
+        $this->db->join('estados_civil', 'pacientes.estado_civil = estados_civil.id');
+        $this->db->join('escolaridad', 'pacientes.escolaridad = escolaridad.id');        
+        $this->db->like('cedula', $cedula, 'both');
+        $query = $this->db->get();
+        return $query->row_array();
+    }   
     
     
 }

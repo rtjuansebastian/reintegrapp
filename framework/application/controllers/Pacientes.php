@@ -21,6 +21,11 @@ class Pacientes extends CI_Controller {
          echo json_encode($paciente);
      }
      
+     public function buscar_paciente(){
+         $cedula = $this->input->post('cedula');
+         $paciente = $this->pacientes_model->buscar_paciente($cedula);
+         echo json_encode($paciente);
+     }
      public function crear_paciente(){
          $data = $this->input->post();
          $respuesta= $this->pacientes_model->crear_paciente($data);

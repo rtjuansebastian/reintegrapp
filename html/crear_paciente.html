@@ -13,7 +13,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/jquery.mobile-1.4.5.css"/>
         <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/bootstrap-datetimepicker.min.css"/>      
- 
+
         <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/estilos.css"/>
         <script src="http://localhost/reintegrapp/assets/js/jquery-3.2.0.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
@@ -32,47 +32,47 @@ and open the template in the editor.
                         <div class = "form-group">
                             <label>Cédula</label>
                             <input type = "text" class = "form-control" name = "cedula" />
-                       </div> 
+                        </div> 
                         <div class = "form-group">
                             <label>Nombres</label>
                             <input type = "text" class = "form-control" name = "nombres" />
-                       </div>     
+                        </div>     
                         <div class = "form-group">
                             <label>Apellidos</label>
                             <input type = "text" class = "form-control" name = "apellidos" />
-                       </div>                          
+                        </div>                          
                         <div class = "form-group">
                             <label>Edad</label>
                             <input type = "number" class = "form-control" name = "edad" />
-                       </div>  
+                        </div>  
                         <div class = "form-group">
                             <label class="radio-inline">Masculino</label>
                             <input type = "radio" name = "genero" class = "form-control" value = "2" checked/>
                             <label class="radio-inline">Femenino</label>
                             <input type = "radio" name = "genero" class = "form-control" value = "1"/>
-                       </div>                          
+                        </div>                          
                         <div class = "form-group">
                             <label>Estado Civil</label>
                             <select name = "estado_civil" class = "form-control">
-                             <option value = "1">Casado</option>
-                             <option value = "2">Unión Libre</option>                             
-                             <option value = "3">Soltero</option>
-                             <option value = "4">Viudo</option>
-                             <option value = "5">Divorciado</option>
+                                <option value = "1">Casado</option>
+                                <option value = "2">Unión Libre</option>                             
+                                <option value = "3">Soltero</option>
+                                <option value = "4">Viudo</option>
+                                <option value = "5">Divorciado</option>
                             </select>
-                       </div> 
+                        </div> 
                         <div class = "form-group">
                             <label>Nivel de Escolaridad</label>
                             <select name = "escolaridad" class = "form-control">
-                             <option value = "1">Ninguno </option>
-                             <option value = "2">Primaria sin terminar</option>                             
-                             <option value = "3">Primaria </option>
-                             <option value = "4">Secundaria sin terminar </option>
-                             <option value = "5">Secundaria </option>
-                             <option value = "6">Profesional</option>
-                             <option value = "7">Posgrado </option>                             
+                                <option value = "1">Ninguno </option>
+                                <option value = "2">Primaria sin terminar</option>                             
+                                <option value = "3">Primaria </option>
+                                <option value = "4">Secundaria sin terminar </option>
+                                <option value = "5">Secundaria </option>
+                                <option value = "6">Profesional</option>
+                                <option value = "7">Posgrado </option>                             
                             </select>
-                       </div>  
+                        </div>  
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker2'>
                                 <input type='text' class="form-control" name = "fecha_reintegracion"/>
@@ -84,15 +84,12 @@ and open the template in the editor.
                         <div class = "form-group">
                             <label>Tiempo Militancia</label>
                             <input type = "number" class = "form-control" name = "tiempo_militancia" />
-                       </div>                        
+                        </div>                        
                         <div class="form-group">
                             <h3></h3>
                             <input type="submit" id="guardar" class="btn btn-success boton_completo" value="Guardar" style="font-size: 20pt"/>
                         </div>                        
-                        
-                    </form>>    
-                    
-                    
+                  </form>   
                 </div>
             </div>
         </div>      
@@ -118,52 +115,51 @@ and open the template in the editor.
     </body>
     <script>
         $(document).ready(function () {
-                $('#datetimepicker2').datetimepicker({
-                    locale: 'es'
-                });
-                
+            $('#datetimepicker2').datetimepicker({
+                locale: 'es'
+            });
+
             $("#crear_paciente").validate({
-                    rules: {
-                        cedula: { required:true, minlength: 8, maxlength: 12},
-                        nombres: {required:true, minlength: 2, maxlength: 30},
-                        apellidos: {required:true, minlength: 2, maxlength: 30},
-                        edad: {required:true, minlength: 2, maxlength: 30, number:true},
-                        fecha_reintegracion: {required:true},
-                        tiempo_militancia: {required:true, number:true}
-                    },
-                    messages: {
-                        cedula : "Debe introducir la cédula.",
-                        nombres : "Debe introducir los nombres.",
-                        apellidos : "Debe introducir los apellidos.",
-                        edad : "Debe introducir la edad.",
-                        fecha_reintegracion: "Debe introducir la fecha de reintegración.",
-                        tiempo_militancia: "Debe introducir el tiempo de militancia."                        
-                    },
-                    submitHandler: function(form){
-                        var dataString = $('#crear_paciente').serialize();
-                        $.ajax(
-                        {
-                            type: "POST",
-                            data: dataString,
-                            url: "http://localhost/reintegrapp/framework/index.php/pacientes/crear_paciente",
-                            success: function (data)
+                rules: {
+                    cedula: {required: true, minlength: 8, maxlength: 12},
+                    nombres: {required: true, minlength: 2, maxlength: 30},
+                    apellidos: {required: true, minlength: 2, maxlength: 30},
+                    edad: {required: true, minlength: 2, maxlength: 30, number: true},
+                    fecha_reintegracion: {required: true},
+                    tiempo_militancia: {required: true, number: true}
+                },
+                messages: {
+                    cedula: "Debe introducir la cédula.",
+                    nombres: "Debe introducir los nombres.",
+                    apellidos: "Debe introducir los apellidos.",
+                    edad: "Debe introducir la edad.",
+                    fecha_reintegracion: "Debe introducir la fecha de reintegración.",
+                    tiempo_militancia: "Debe introducir el tiempo de militancia."
+                },
+                submitHandler: function (form) {
+                    var dataString = $('#crear_paciente').serialize();
+                    $.ajax(
                             {
-                                var result = $.parseJSON(data);
-                                if (result.error === false)
+                                type: "POST",
+                                data: dataString,
+                                url: "http://localhost/reintegrapp/framework/index.php/pacientes/crear_paciente",
+                                success: function (data)
                                 {
-                                    $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
-                                    $('.bs-example-modal-sm').modal('show');
-                                    setTimeout("location.href='pacientes.html'", 4000);
-                                } 
-                                else
-                                {
-                                    $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
-                                    $('.bs-example-modal-sm').modal('show');
+                                    var result = $.parseJSON(data);
+                                    if (result.error === false)
+                                    {
+                                        $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
+                                        $('.bs-example-modal-sm').modal('show');
+                                        setTimeout("location.href='pacientes.html'", 4000);
+                                    } else
+                                    {
+                                        $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
+                                        $('.bs-example-modal-sm').modal('show');
+                                    }
                                 }
-                            }
-                        });
-                    }
-            });                
+                            });
+                }
+            });
         });
     </script>
 </html> 
