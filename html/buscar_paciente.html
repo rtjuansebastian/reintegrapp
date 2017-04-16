@@ -31,7 +31,21 @@ and open the template in the editor.
                             <input type="submit" id="guardar" class="btn btn-success " value="Buscar" style="font-size: 10pt"/>
 
                         </div>
-                    </form>    
+                    </form> 
+                                        <table class = "table">
+                        <thead>
+                            <tr>
+                                <th style = "width:75%">
+                                    Paciente
+                                </th>
+                                <th style = "width:25%">
+                                    Ver
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id = "pacientes">
+                       </tbody>
+                    </table>
                     
                 </div>
             </div>
@@ -60,9 +74,12 @@ and open the template in the editor.
                                 success: function (data)
                                 {
                                     var result = $.parseJSON(data);
-                                    console.log(result);
-                                    
-                                }
+                                    var html = "";
+                                    $.each(result, function( index, value ) {
+                                   html += "<tr><td>"+ value.nombres +" "+ value.apellidos +"</td><td><a href = \"http://localhost/reintegrapp/html/paciente.html?cedula="+value.cedula+"\" class=\"btn btn-default\">Ver</a></td></tr>";
+                                });
+                                $('#pacientes').html(html);
+                               }
                             });
                 }
             });

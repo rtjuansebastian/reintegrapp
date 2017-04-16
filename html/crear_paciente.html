@@ -46,11 +46,14 @@ and open the template in the editor.
                             <input type = "number" class = "form-control" name = "edad" />
                         </div>  
                         <div class = "form-group">
-                            <label class="radio-inline">Masculino</label>
-                            <input type = "radio" name = "genero" class = "form-control" value = "2" checked/>
-                            <label class="radio-inline">Femenino</label>
-                            <input type = "radio" name = "genero" class = "form-control" value = "1"/>
-                        </div>                          
+                            <label class="radio-inline">
+                                <input type="radio" name="genero" value ="2">Masculino
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="genero" value = "2">Femenino
+                            </label> 
+                        </div>
+
                         <div class = "form-group">
                             <label>Estado Civil</label>
                             <select name = "estado_civil" class = "form-control">
@@ -89,7 +92,7 @@ and open the template in the editor.
                             <h3></h3>
                             <input type="submit" id="guardar" class="btn btn-success boton_completo" value="Guardar" style="font-size: 20pt"/>
                         </div>                        
-                  </form>   
+                    </form>   
                 </div>
             </div>
         </div>      
@@ -129,7 +132,10 @@ and open the template in the editor.
                     tiempo_militancia: {required: true, number: true}
                 },
                 messages: {
-                    cedula: "Debe introducir la cédula.",
+                    cedula: {required: "Debe introducir la cédula.",                      
+                            minlength: ("Ingresa al menos {0} catacteres"),
+                            maxlength: ("Ingresa ma{0} catacteres")
+                    },
                     nombres: "Debe introducir los nombres.",
                     apellidos: "Debe introducir los apellidos.",
                     edad: "Debe introducir la edad.",
