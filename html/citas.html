@@ -10,19 +10,35 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/jquery.mobile-1.4.5.css"/>
         <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/estilos.css"/>
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/bootstrap-datetimepicker.min.css"/>
+        
         <script src="http://localhost/reintegrapp/assets/js/jquery-3.2.0.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/jquery.cookie.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.validate.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/moment-with-locales.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/bootstrap-datetimepicker.js"></script>
     </head>
     <body>        
         <div class="container">      
             <div class="row">                        
                 <div class="col-md-6 col-md-offset-3">
                     <img src="http://localhost/reintegrapp/assets/img/logo.png" heigth="20" width="100%"/>                           
-                    
+                    <table class="table">
+                        <thead>
+                            <th>Fecha</th>
+                            <th>Paciente</th>
+                            <th>Estado</th>
+                        </thead>
+                        <tbody id="citas">
+                            
+                        </tbody>
+                    </table>
+                    <div class="col-md-6">
+                        <a href="agendar_cita.html" class="btn btn-default">Agendar nueva cita</a>
+                    </div>
                 </div>
             </div>
         </div>      
@@ -42,7 +58,26 @@ and open the template in the editor.
     </body>
     <script>
         $(document).ready(function () {
-
+            var doctor= $.cookie('doctor');
+            $.ajax(
+            {
+                data: {doctor:doctor},
+                type: "POST",
+                url: "http://localhost/reintegrapp/framework/index.php/citas/consultar_citas",
+                success: function (data)
+                {
+                    var result = $.parseJSON(data);
+                    var html = "";
+                   $.each(result, function( index, value ) {
+                       html += "<tr>"+
+                                "<td>"+value.fecha+"</td>"+
+                                "<td>"+value.nombres+" "+value.apellidos+"</td>"+
+                                "<td>"+value.estado+"</td>"+
+                            "</tr>";
+                    });
+                    $('#citas').html(html);
+                }
+            });            
         });
     </script>
 </html> 
