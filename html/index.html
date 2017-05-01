@@ -15,6 +15,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/estilos.css"/>
         <script src="http://localhost/reintegrapp/assets/js/jquery-3.2.0.min.js"></script>
         <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.cookie.js"></script>
     </head>
     <body>        
         <div class="container">      
@@ -27,7 +28,7 @@ and open the template in the editor.
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a role="button" href="login.html" class="boton_completo btn btn-default glyphicon glyphicon-user"> Doctor</a>
+                                    <a id="doctor" role="button" href="#" class="boton_completo btn btn-default glyphicon glyphicon-user"> Doctor</a>
                                 </h4>
                             </div>
                         </div> 
@@ -67,5 +68,17 @@ and open the template in the editor.
             <footer class="text-center">Universidad distrital Francisco Jose de Caldas 2016</footer>
         </div>           
     </body>
+    <script>
+        $(document).ready(function () {
+            $("#doctor").click(function(){
+                if($.cookie('doctor')){
+                    window.location.href = 'pacientes.html';
+                }                    
+                else{
+                    window.location.href = 'login.html';
+                }
+            });
+        });
+    </script>    
 </html> 
 

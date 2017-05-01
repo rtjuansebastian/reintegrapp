@@ -26,11 +26,12 @@ class Usuarios_model extends CI_Model
         
         if($validacion)
         {
-            $respuesta['acceso']=$this->usuarios_model->crear_sesion($usuario);
+            $respuesta['acceso']=$this->usuarios_model->crear_sesion($usuario,$row->cedula);
             $respuesta['mensaje']="Bienvenido ".$usuario;
             $respuesta['error']=FALSE;            
         }
         else {
+            $respuesta['acceso']=array('cedula'=>null, 'usuario'=>null, 'logged_in'=>FALSE);
             $respuesta['mensaje']="Datos incorrectos";
             $respuesta['error']=TRUE;
         }
@@ -62,14 +63,15 @@ class Usuarios_model extends CI_Model
             return crypt($pass, $hash) == $hash;
     }
     
-    public function crear_sesion($usuario)
+    public function crear_sesion($usuario,$cedula)
     {
         $acceso = array(
+                'cedula'=>$cedula,
                 'usuario'  => $usuario,
                 'logged_in' => TRUE
            );
 
-           return $acceso;         
+        return $acceso;         
     }
     
     public function traer_usuarios()
