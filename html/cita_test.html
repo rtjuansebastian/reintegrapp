@@ -68,8 +68,13 @@ and open the template in the editor.
     <script>
         var c=0; var h=0; var a=0; var s=0; var i=0; var d=0; var e=0;
         $(document).ready(function () {
-            $.cookie.json = true;                                    
-            var chaside=$.cookie('chaside');
+            $.cookie.json = true;           
+            if($.cookie('chaside')){
+                var chaside=$.cookie('chaside');           
+            }
+            else{
+                var chaside={c:0,h:0,a:0,s:0,i:0,d:0,e:0};
+            }
             var cita = $.getURLParam("cita");
             var pregunta = $.getURLParam("pregunta");            
             var html='';
