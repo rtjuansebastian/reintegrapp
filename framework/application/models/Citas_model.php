@@ -61,4 +61,14 @@ class Citas_model extends CI_Model
             return TRUE;
         }
     }
+    
+    public function cambiar_estado_cita($cita,$estado)
+    {
+        $data = array(
+                       'estado' => $estado
+                    );
+
+        $this->db->where('cita', $cita);
+        $this->db->update('citas', $data);         
+    }
 }

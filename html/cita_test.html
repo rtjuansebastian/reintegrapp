@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Reintegrapp</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/estilos.css"/>
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/bootstrap-datetimepicker.min.css"/>
+        <link rel="stylesheet" href="http://localhost/reintegrapp/assets/css/toogle_switch.css"/>
+        
+        <script src="http://localhost/reintegrapp/assets/js/jquery-3.2.0.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/bootstrap.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.cookie.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.validate.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/moment-with-locales.min.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/bootstrap-datetimepicker.js"></script>
+        <script src="http://localhost/reintegrapp/assets/js/jquery.getParams.js"></script>
+    </head>
+    <body>        
+        <div class="container">      
+            <div class="row">                        
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="http://localhost/reintegrapp/assets/img/logo.png" heigth="20" width="100%"/>                           
+                    <div id="preguntas">
+                        
+                    </div>
+                    <a href="#" class="btn btn-default" id="continuar">Continuar</a>
+                </div>
+            </div>
+        </div>      
+        <div class="container">
+            <footer>
+                <div id="footer">
+                    <div class="col-xs-12 navbar-default navbar-fixed-bottom">
+                        <div class="row" id="bottomNav">
+                            <div class="col-xs-4 text-center"><a href="javascript:history.back()"><i class="glyphicon glyphicon-circle-arrow-left"></i><br></a></div>
+                            <div class="col-xs-4 text-center"><a href="index.html"><i class="glyphicon glyphicon-home"></i><br></a></div>
+                            <div class="col-xs-4 text-center"><a href="#"><i class="glyphicon glyphicon-circle-arrow-right"></i><br></a></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Reintegrapp</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="error"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </body>
+    <script>
+        var c=0; var h=0; var a=0; var s=0; var i=0; var d=0; var e=0;
+        $(document).ready(function () {
+            $.cookie.json = true;                                    
+            var chaside=$.cookie('chaside');
+            var cita = $.getURLParam("cita");
+            var pregunta = $.getURLParam("pregunta");            
+            var html='';
+            if(pregunta==="100"){
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost/reintegrapp/framework/index.php/diagnosticos/enviar_diagnostico?cita="+cita,
+                    data: chaside,
+                    success: function (data)
+                    {
+                        $.removeCookie('chaside');
+                        var result = $.parseJSON(data);                        
+                        if (result.error === false)
+                        {
+                            $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
+                            $('.bs-example-modal-sm').modal('show');
+                            setTimeout("location.href='citas.html'", 4000);
+                        } 
+                        else
+                        {
+                            $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
+                            $('.bs-example-modal-sm').modal('show');
+                        }                        
+                    }                
+                });                
+            }
+            else
+            {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost/reintegrapp/framework/index.php/diagnosticos/traer_preguntas?pregunta="+pregunta,
+                    success: function (data)
+                    {                    
+                        pregunta=parseInt(pregunta)+10;
+                        var result = $.parseJSON(data);
+                        $.each(result, function( index, value ) {
+                            html=html+  "<p>"+value.id+". "+value.pregunta+"</p>"+
+                                        "<label class=\"switch\">"+                                        
+                                            "<input type=\"checkbox\" data-categoria=\""+value.categoria+"\" data-pregunta=\""+value.id+"\" class=\"pregunta\">"+
+                                            "<div class=\"slider\"></div>"+
+                                        "</label>";
+                        });
+
+                        $("#preguntas").html(html);
+                    }                
+                });
+            }
+            
+            $(document).on("click","#continuar",function(){
+                contar_respuestas();
+                chaside.c+=c;
+                chaside.h+=h;
+                chaside.a+=a;
+                chaside.s+=s;
+                chaside.i+=i;
+                chaside.d+=d;
+                chaside.e+=e;
+                $.cookie('chaside', chaside);
+                location.href= 'cita_test.html?cita='+cita+'&pregunta='+pregunta+'';
+            });                        
+            
+        });
+        
+        function contar_respuestas()
+        {
+            c=0; h=0; a=0; s=0; i=0; d=0; e=0;
+            $("input:checkbox:checked").each(   
+                function() {
+                    switch ($(this).data("categoria")) {
+                        case 'C':
+                            c++;
+                            break;
+                        case 'H':
+                            h++;
+                            break;
+                        case 'A':                           
+                            a++;
+                            break;
+                        case 'S':
+                            s++;
+                            break;
+                        case 'I':
+                            i++;
+                            break;
+                        case 'D':                           
+                            d++;
+                            break;  
+                        case 'E':                           
+                            e++;
+                            break;                             
+                        default:
+                            break;
+                    }                     
+                }
+            );            
+        }
+    </script>
+</html> 

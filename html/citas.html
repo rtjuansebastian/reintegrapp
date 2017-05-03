@@ -31,9 +31,10 @@ and open the template in the editor.
                             <th>Fecha</th>
                             <th>Paciente</th>
                             <th>Estado</th>
+                            <th>Acción</th>
                         </thead>
                         <tbody id="citas">
-                            
+                        
                         </tbody>
                     </table>
                     <div class="col-md-6">
@@ -55,6 +56,22 @@ and open the template in the editor.
                 </div>
             </footer>
         </div>
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">'
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Reintegrapp</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="error"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>          
     </body>
     <script>
         $(document).ready(function () {
@@ -70,14 +87,35 @@ and open the template in the editor.
                     var html = "";
                    $.each(result, function( index, value ) {
                        html += "<tr>"+
-                                "<td>"+value.fecha+"</td>"+
-                                "<td>"+value.nombres+" "+value.apellidos+"</td>"+
-                                "<td>"+value.estado+"</td>"+
-                            "</tr>";
+                                    "<td>"+value.fecha+"</td>"+
+                                    "<td>"+value.nombres+" "+value.apellidos+"</td>"+
+                                    "<td>"+value.estado+"</td>"+                                        
+                                    "<td><button class='btn btn-default glyphicon glyphicon-check accion' data-estado='"+value.estado+"' data-cita='"+value.id+"'></button></td>"+  
+                                "</tr>";
                     });
                     $('#citas').html(html);
                 }
             });            
+            
+            $(document).on("click",".accion",function(){
+                var estado=$(this).data("estado");
+                var cita=$(this).data("cita");
+                switch (estado) {
+                       case 'Solicitada':
+                           location.href = 'cita_test.html?cita='+cita+'&pregunta=0';
+                           break;
+                       case 'Realizada':
+                           location.href = 'diagnostico.html?cita="'+cita+'"';
+                           break;
+                       case 'Cancelada':
+                            $("#error").html("<p class=\"bg-danger\">Esta cita fue cancelada</p>");
+                            $('.bs-example-modal-sm').modal('show');                           
+                           break;
+                       default:
+                           break;
+                   }
+                    
+            });
         });
     </script>
 </html> 

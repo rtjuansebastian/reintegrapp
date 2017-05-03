@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "",
       "projectGuid": "32e7148f-1ce0-4794-84e1-81f1bb8ff6dc",
-      "lastModifiedDate": 1492206517937,
+      "lastModifiedDate": 1493827238535,
       "creationDate": 1492206424546
     },
     "testDirectory": "test",
@@ -54,7 +54,14 @@
           "navigation": []
         },
         "addlPermissions_": "",
-        "icons_": [],
+        "icons_": [
+          {
+            "density": "xhdpi",
+            "relPath": "package-assets/logo96x96.png",
+            "width": 96,
+            "height": 96
+          }
+        ],
         "splashes_": [],
         "appVersion_": "0.0.1",
         "appVersionCode_": "1",
