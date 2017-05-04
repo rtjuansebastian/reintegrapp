@@ -68,7 +68,7 @@ class Citas_model extends CI_Model
                        'estado' => $estado
                     );
 
-        $this->db->where('cita', $cita);
+        $this->db->where('id', $cita);
         $this->db->update('citas', $data);         
     }
 }

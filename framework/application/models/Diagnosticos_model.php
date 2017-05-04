@@ -51,4 +51,17 @@ class Diagnosticos_model extends CI_Model
         
         return $respuesta;
     }
+    
+    public function consultar_diagnostico($cita)
+    {
+        $diagnostico=array();
+        $this->db->select("diagnostico.id, diagnostico.diagnostico_test, diagnosticos_test.c, diagnosticos_test.h, diagnosticos_test.a, diagnosticos_test.s, diagnosticos_test.i, diagnosticos_test.d, diagnosticos_test.e");
+        $this->db->from("diagnostico");
+        $this->db->join("diagnosticos_test","diagnostico.diagnostico_test=diagnosticos_test.id");
+        $this->db->where("diagnostico.cita",$cita);
+        $query=  $this->db->get();
+        $diagnostico=$query->row_array();
+        
+        return $diagnostico;        
+    }
 }

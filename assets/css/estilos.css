@@ -9,11 +9,11 @@ body
     margin: 0 0 65px;
 }
 
-footer
+footer,#footer
 {
     width: 100%;
     bottom: 0;
-    position: absolute;
+    position: fixed;
     height: 65px;
 }
 
