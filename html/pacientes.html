@@ -37,9 +37,10 @@ and open the template in the editor.
                         <tbody id = "pacientes">
                        </tbody>
                     </table>
-                    <a href ="http://localhost/reintegrapp/html/crear_paciente.html" class="btn btn-default" >Add</a>    
-                    <a href ="http://localhost/reintegrapp/html/buscar_paciente.html" class="btn btn-default" >Buscar</a>      
-                    <a href ="http://localhost/reintegrapp/html/citas.html" class="btn btn-default" >Citas</a> 
+                    <a href ="crear_paciente.html" class="btn btn-default" >Add</a>    
+                    <a href ="buscar_paciente.html" class="btn btn-default" >Buscar</a>      
+                    <a href ="citas.html" class="btn btn-default" >Citas</a> 
+                    <button id="cerrar_sesion" class="btn btn-default" >Desconectar</button> 
                 </div>
             </div>
         </div>      
@@ -64,20 +65,25 @@ and open the template in the editor.
             {
                 location.href='login.html';
             }
-                        $.ajax(
-                        {
-                            type: "POST",
-                            url: "http://gincomex.com/reintegrapp/framework/index.php/pacientes/consultar_pacientes",
-                            success: function (data)
-                            {
-                                var result = $.parseJSON(data);
-                                var html = "";
-                               $.each(result, function( index, value ) {
-                                   html += "<tr><td>"+ value.nombres +" "+ value.apellidos +"</td><td><a href = \"http://localhost/reintegrapp/html/paciente.html?cedula="+value.cedula+"\" class=\"btn btn-default\">Ver</a></td></tr>";
-                                });
-                                $('#pacientes').html(html);
-                            }
-                        });            
+            $.ajax(
+            {
+                type: "POST",
+                url: "http://gincomex.com/reintegrapp/framework/index.php/pacientes/consultar_pacientes",
+                success: function (data)
+                {
+                    var result = $.parseJSON(data);
+                    var html = "";
+                   $.each(result, function( index, value ) {
+                       html += "<tr><td>"+ value.nombres +" "+ value.apellidos +"</td><td><a href = \"http://localhost/reintegrapp/html/paciente.html?cedula="+value.cedula+"\" class=\"btn btn-default\">Ver</a></td></tr>";
+                    });
+                    $('#pacientes').html(html);
+                }
+            }); 
+            $("#cerrar_sesion").click(function(){
+                $.removeCookie('sesion');
+                $.removeCookie('doctor');
+                location.href='index.html';
+            });
         });
     </script>
 </html> 
