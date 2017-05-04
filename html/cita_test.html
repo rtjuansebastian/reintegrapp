@@ -81,7 +81,7 @@ and open the template in the editor.
             if(pregunta==="100"){
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost/reintegrapp/framework/index.php/diagnosticos/enviar_diagnostico?cita="+cita,
+                    url: "http://gincomex.com/reintegrapp/framework/index.php/diagnosticos/enviar_diagnostico?cita="+cita,
                     data: chaside,
                     success: function (data)
                     {
@@ -105,7 +105,7 @@ and open the template in the editor.
             {
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost/reintegrapp/framework/index.php/diagnosticos/traer_preguntas?pregunta="+pregunta,
+                    url: "http://gincomex.com/reintegrapp/framework/index.php/diagnosticos/traer_preguntas?pregunta="+pregunta,
                     success: function (data)
                     {                    
                         pregunta=parseInt(pregunta)+10;

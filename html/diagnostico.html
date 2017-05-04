@@ -50,7 +50,7 @@ and open the template in the editor.
             var cita = $.getURLParam("cita");
             $.ajax({
                 type: "GET",
-                url: "http://localhost/reintegrapp/framework/index.php/diagnosticos/consultar_diagnostico?cita="+cita,
+                url: "http://gincomex.com/reintegrapp/framework/index.php/diagnosticos/consultar_diagnostico?cita="+cita,
                 success: function (data)
                 {
                     var result = $.parseJSON(data);                        
