@@ -80,7 +80,10 @@ and open the template in the editor.
     </body>
     <script>
         $(document).ready(function () {
-            $("#doctor").val($.cookie('doctor'));
+            //$("#doctor").val($.cookie('doctor'));
+            var storage= window.localStorage;
+            var doctor=storage.getItem("doctor");
+            $("#doctor").val(doctor);
             $('#datetimepicker1').datetimepicker({
                 format:"YYYY-MM-DD", 
                 minDate: moment({d: 0}),

@@ -75,7 +75,9 @@ and open the template in the editor.
     <script>
         $(document).ready(function () {
             $("#doctor").click(function(){
-                if($.cookie('doctor')){
+                //if($.cookie('doctor')){
+                var storage= window.localStorage;
+                if(storage.getItem("doctor")){
                     window.location.href = 'pacientes.html';
                 }                    
                 else{

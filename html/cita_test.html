@@ -68,13 +68,19 @@ and open the template in the editor.
     <script>
         var c=0; var h=0; var a=0; var s=0; var i=0; var d=0; var e=0;
         $(document).ready(function () {
-            $.cookie.json = true;           
-            if($.cookie('chaside')){
-                var chaside=$.cookie('chaside');           
+            //$.cookie.json = true;           
+            //if($.cookie('chaside')){            
+            var storage= window.localStorage;            
+            if(storage.getItem("chaside")){
+                //var chaside=$.cookie('chaside');           
+                var chaside=JSON.parse(storage.getItem("chaside"));  
             }
             else{
                 var chaside={c:0,h:0,a:0,s:0,i:0,d:0,e:0};
             }
+            
+            console.log(chaside);
+            
             var cita = $.getURLParam("cita");
             var pregunta = $.getURLParam("pregunta");            
             var html='';
@@ -85,7 +91,8 @@ and open the template in the editor.
                     data: chaside,
                     success: function (data)
                     {
-                        $.removeCookie('chaside');
+                        //$.removeCookie('chaside');
+                        storage.removeItem("chaside");
                         var result = $.parseJSON(data);                        
                         if (result.error === false)
                         {
@@ -132,7 +139,9 @@ and open the template in the editor.
                 chaside.i+=i;
                 chaside.d+=d;
                 chaside.e+=e;
-                $.cookie('chaside', chaside);
+                //$.cookie('chaside', chaside);
+                var dataToStore = JSON.stringify(chaside);
+                storage.setItem("chaside",dataToStore);
                 location.href= 'cita_test.html?cita='+cita+'&pregunta='+pregunta+'';
             });                        
             

@@ -75,7 +75,9 @@ and open the template in the editor.
     </body>
     <script>
         $(document).ready(function () {
-            var doctor= $.cookie('doctor');
+            //var doctor= $.cookie('doctor');
+            var storage= window.localStorage;
+            var doctor=storage.getItem("doctor");            
             $.ajax(
             {
                 data: {doctor:doctor},
