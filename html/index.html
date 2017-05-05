@@ -49,14 +49,14 @@ and open the template in the editor.
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a role="button" href="#" class="boton_completo btn btn-default glyphicon glyphicon-list-alt"> Instrucciones</a>
+                                    <button id="instrucciones" class="boton_completo btn btn-default glyphicon glyphicon-list-alt"> Instrucciones</button>
                                 </h4>
                             </div>
                         </div>   
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a role="button" href="#" class="boton_completo btn btn-default glyphicon glyphicon-list-alt"> Interpretacion</a>
+                                    <button id="interpretacion"  class="boton_completo btn btn-default glyphicon glyphicon-list-alt"> Interpretacion</button>
                                 </h4>
                             </div>
                         </div>                     
@@ -84,6 +84,12 @@ and open the template in the editor.
                     window.location.href = 'login.html';
                 }
             });
+            $("#instrucciones").click(function(){
+                window.open('https://docs.google.com/viewer?url=http://gincomex.com/reintegrapp/InstruccionesReinApp.pdf&embedded=true', '_blank', 'location=yes');
+            });
+            $("#interpretacion").click(function(){
+                window.open('https://docs.google.com/viewer?url=http://gincomex.com/reintegrapp/InterpretacionReinApp.pdf&embedded=true', '_blank', 'location=yes');
+            });            
         });
     </script>    
 </html> 
