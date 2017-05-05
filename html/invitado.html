@@ -67,46 +67,57 @@ and open the template in the editor.
     </body>
     <script>
         var c=0; var h=0; var a=0; var s=0; var i=0; var d=0; var e=0;
-        $(document).ready(function () {
-            //$.cookie.json = true;           
-            //if($.cookie('chaside')){            
+        $(document).ready(function () {         
             var storage= window.localStorage;            
-            if(storage.getItem("chaside")){
-                //var chaside=$.cookie('chaside');           
+            if(storage.getItem("chaside")){         
                 var chaside=JSON.parse(storage.getItem("chaside"));  
             }
             else{
                 var chaside={c:0,h:0,a:0,s:0,i:0,d:0,e:0};
             }
-            
-            //console.log(chaside);
-            
-            var cita = $.getURLParam("cita");
             var pregunta = $.getURLParam("pregunta");            
             var html='';
             if(pregunta==="100"){
-                $.ajax({
-                    type: "GET",
-                    url: "http://gincomex.com/reintegrapp/framework/index.php/diagnosticos/enviar_diagnostico?cita="+cita,
-                    data: chaside,
-                    success: function (data)
-                    {
-                        //$.removeCookie('chaside');
-                        storage.removeItem("chaside");
-                        var result = $.parseJSON(data);                        
-                        if (result.error === false)
-                        {
-                            $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
-                            $('.bs-example-modal-sm').modal('show');
-                            setTimeout("location.href='citas.html'", 4000);
-                        } 
-                        else
-                        {
-                            $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
-                            $('.bs-example-modal-sm').modal('show');
-                        }                        
-                    }                
-                });                
+                    var mayor=0;
+                    var resultado="";
+                    var area="";                
+                    $.each(chaside,function(key,value){
+                        if(value>parseInt(mayor)){
+                            mayor=value;
+                            resultado=key;
+                        }
+                    });
+                    
+                    switch (resultado) {
+                       case 'c':
+                           area="Carreras Administrativas y Contables";
+                           break;
+                       case 'h':
+                           area="Carreras Humanísticas y Sociales";
+                           break;
+                       case 'a':
+                           area="Carreras Artísticas";
+                           break;
+                       case 's':
+                           area="Carreras de Medicina y Ciencias de la Salud";
+                           break;
+                       case 'i':
+                           area="Carreras de Ingeniería y Computación";
+                           break;
+                       case 'd':
+                           area="Carreras de Defensa y Seguridad";
+                           break;  
+                       case 'e':
+                           area="Carreras de Ciencias Exactas y Agrarias";
+                           break;                         
+                       default:
+                           break;
+                    }                    
+                    
+                    var respuesta="Durante esta cita, luego de aplicar el test el area con mas puntaje fue <strong>"+area+"</strong> con un total de "+mayor+" ptos.";
+                    $("#preguntas").html(respuesta);                
+                    storage.removeItem("chaside");
+                    $("#continuar").hide();
             }
             else
             {
@@ -139,10 +150,9 @@ and open the template in the editor.
                 chaside.i+=i;
                 chaside.d+=d;
                 chaside.e+=e;
-                //$.cookie('chaside', chaside);
                 var dataToStore = JSON.stringify(chaside);
                 storage.setItem("chaside",dataToStore);
-                location.href= 'cita_test.html?cita='+cita+'&pregunta='+pregunta+'';
+                location.href= 'invitado.html?pregunta='+pregunta+'';
             });                        
             
         });
