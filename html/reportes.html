@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Reintegrapp</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="package-assets/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="package-assets/css/estilos.css"/>
+        <link rel="stylesheet" href="package-assets/css/bootstrap-datetimepicker.min.css"/>
+        
+        <script src="package-assets/js/jquery-3.2.0.min.js"></script>
+        <script src="package-assets/js/bootstrap.min.js"></script>
+        <script src="package-assets/js/jquery.cookie.js"></script>
+        <script src="package-assets/js/jquery.validate.min.js"></script>
+        <script src="package-assets/js/moment-with-locales.min.js"></script>
+        <script src="package-assets/js/bootstrap-datetimepicker.js"></script>
+        <script src="package-assets/js/jquery.getParams.js"></script>
+    </head>
+    <body>        
+        <div class="container">      
+            <div class="row">                        
+                <div class="col-md-6 col-md-offset-3">
+                    <img src="package-assets/img/logo.png" heigth="20" width="100%"/> 
+                    <table class="table">
+                        <thead>
+                            <th>Fecha</th>
+                            <th>Paciente</th>
+                            <th>Doctor</th>
+                            <th>Resultado</th>
+                        </thead>
+                        <tbody id="reporte">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>      
+        <div class="container">
+            <footer>
+                <div id="footer" class="row">
+                    <div class="col-xs-12 navbar-default navbar-fixed-bottom">
+                        <div class="row" id="bottomNav">
+                            <div class="col-xs-4 text-center"><a href="javascript:history.back()"><i class="glyphicon glyphicon-circle-arrow-left"></i><br></a></div>
+                            <div class="col-xs-4 text-center"><a href="index.html"><i class="glyphicon glyphicon-home"></i><br></a></div>
+                            <div class="col-xs-4 text-center"><a href="#"><i class="glyphicon glyphicon-circle-arrow-right"></i><br></a></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            $.ajax(
+            {
+                type: "POST",
+                url: "http://gincomex.com/reintegrapp/framework/index.php/diagnosticos/consultar_resultados",
+                success: function (data)
+                {
+                    var result = $.parseJSON(data);
+                    var html = "";
+                                
+                    $.each(result,function(key,value){
+
+                        var chaside= {c:value.c, h:value.h, a:value.a, s:value.s, i:value.i, d:value.d, e:value.e};
+                        var mayor=0;
+                        var resultado="";
+                        var area="";
+                        $.each(chaside,function(key,value){
+                            if(value>parseInt(mayor)){
+                                mayor=value;
+                                resultado=key;
+                            }
+                        });
+
+                        switch (resultado) {
+                           case 'c':
+                               area="Carreras Administrativas y Contables";
+                               break;
+                           case 'h':
+                               area="Carreras Humanísticas y Sociales";
+                               break;
+                           case 'a':
+                               area="Carreras Artísticas";
+                               break;
+                           case 's':
+                               area="Carreras de Medicina y Ciencias de la Salud";
+                               break;
+                           case 'i':
+                               area="Carreras de Ingeniería y Computación";
+                               break;
+                           case 'd':
+                               area="Carreras de Defensa y Seguridad";
+                               break;  
+                           case 'e':
+                               area="Carreras de Ciencias Exactas y Agrarias";
+                               break;                         
+                           default:
+                               break;
+                        }                                                            
+
+                        html=html+  "<tr>"+
+                                        "<td>"+value.fecha+"</td>"+
+                                        "<td>"+value.paciente+"</td>"+
+                                        "<td>"+value.doctor+"</td>"+
+                                        "<td>"+area+"</td>"+
+                                    "</tr>";
+                    });
+                    $('#reporte').html(html);
+                }
+            }); 
+        });
+    </script>
+</html> 

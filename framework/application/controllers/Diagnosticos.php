@@ -36,4 +36,10 @@ class Diagnosticos extends CI_Controller {
         $diagnostico=$this->diagnosticos_model->consultar_diagnostico($cita);
         echo json_encode($diagnostico);
     }
+    
+    public function consultar_resultados()
+    {
+        $resultados=$this->diagnosticos_model->consultar_resultados();
+        echo json_encode($resultados);
+    }
 }
