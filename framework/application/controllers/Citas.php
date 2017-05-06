@@ -24,4 +24,11 @@ class Citas extends CI_Controller {
         $respuesta=$this->citas_model->agendar_cita($data);
         echo json_encode($respuesta);
     }
+    
+    public function modificar_cita()
+    {
+        $data=  $this->input->post();
+        $respuesta=$this->citas_model->modificar_cita($data);
+        echo json_encode($respuesta);        
+    }
 }

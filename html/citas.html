@@ -34,7 +34,7 @@ and open the template in the editor.
                             <th>Acción</th>
                         </thead>
                         <tbody id="citas">
-                            Cargando...
+                            
                         </tbody>
                     </table>
                     <div class="col-md-6">
@@ -92,7 +92,7 @@ and open the template in the editor.
                                     "<td>"+value.fecha+"</td>"+
                                     "<td>"+value.nombres+" "+value.apellidos+"</td>"+
                                     "<td>"+value.estado+"</td>"+                                        
-                                    "<td><button class='btn btn-default glyphicon glyphicon-check accion' data-estado='"+value.estado+"' data-cita='"+value.id+"'></button></td>"+  
+                                    "<td><button class='btn btn-default glyphicon glyphicon-check accion' data-estado='"+value.estado+"' data-cita='"+value.id+"' data-fecha='"+value.fecha+"'></button></td>"+  
                                 "</tr>";
                     });
                     $('#citas').html(html);
@@ -102,9 +102,14 @@ and open the template in the editor.
             $(document).on("click",".accion",function(){
                 var estado=$(this).data("estado");
                 var cita=$(this).data("cita");
+                var fecha=$(this).data("fecha");
                 switch (estado) {
                        case 'Solicitada':
-                           location.href = 'cita_test.html?cita='+cita+'&pregunta=0';
+                           var html='<div class="form-group"><a href="cita_test.html?cita='+cita+'" class="btn btn-sm btn-default glyphicon glyphicon-pencil">realizar test </a></div>'+
+                                    '<div class="form-group"><button id="modificar_cita" data-cita="'+cita+'" data-fecha="'+fecha+'" class="btn btn-sm btn-default glyphicon glyphicon-calendar">Cambiar fecha </button></div>'+
+                                    '<div class="form-group"><button id="cancelar_cita" data-cita="'+cita+'" class="btn btn-sm btn-default  glyphicon glyphicon-remove">Cancelar cita </button></div>';
+                            $("#error").html(html);
+                            $('.bs-example-modal-sm').modal('show');                                                      
                            break;
                        case 'Realizada':
                            location.href = 'diagnostico.html?cita='+cita+'';
@@ -118,6 +123,55 @@ and open the template in the editor.
                    }
                     
             });
+            
+            $(document).on("click","#modificar_cita",function(){
+                var cita=$(this).data("cita");
+                var fecha=$(this).data("fecha");
+                var html= '<form id="form_modificar_cita">'+
+                                '<div class="form-group">'+
+                                    '<label>Fecha</label>'+
+                                    '<div class="input-group date" id="datetimepicker1">'+
+                                        '<input type="text" class="form-control" id="fecha" name="fecha" value="'+fecha+'"/>'+
+                                        '<span class="input-group-addon">'+
+                                            '<span class="glyphicon glyphicon-calendar"></span>'+
+                                        '</span>'+
+                                    '</div>'+               
+                                '</div>'+
+                                '<input type="hidden" name="cita" id="cita" value="'+cita+'">'+
+                                '<button type="button" id="bnt_modificar_cita" class="btn btn-default">Modificar</button>'+
+                            '</form>';
+                    
+                    $("#error").html(html);    
+                    
+                    $('#datetimepicker1').datetimepicker({
+                        format:"YYYY-MM-DD", 
+                        minDate: moment({d: 0}),
+                        locale: 'es'
+                    });
+                
+            });
+            
+            $(document).on("click","#bnt_modificar_cita",function(){
+                var dataString = $('#form_modificar_cita').serialize();
+                $.ajax(
+                {
+                    type: "POST",
+                    data: dataString,
+                    url: "http://gincomex.com/reintegrapp/framework/index.php/citas/modificar_cita",
+                    success: function (data)
+                    {
+                        var result = $.parseJSON(data);
+                        if (result.error === false)
+                        {
+                            $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
+                            setTimeout("location.href='citas.html'", 2000);
+                        } else
+                        {
+                            $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
+                        }
+                    }
+                });
+            });            
         });
     </script>
 </html> 

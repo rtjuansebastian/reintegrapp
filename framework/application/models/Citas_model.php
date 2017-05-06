@@ -71,4 +71,40 @@ class Citas_model extends CI_Model
         $this->db->where('id', $cita);
         $this->db->update('citas', $data);         
     }
+    
+    public function modificar_cita($datos)
+    {
+        $respuesta=array();
+        $this->db->where("id",$datos['cita']);
+        $query=$this->db->get("citas");
+        
+        if($query->num_rows()>0)
+        {
+            $cita=$query->row_array();
+            
+            if($this->citas_model->consultar_disponibilidad($cita['doctor'],$datos['fecha']))
+            {
+                $data = array(
+                   'fecha' => $datos['fecha']
+                );
+
+                $this->db->where('id', $datos['cita']);
+                $this->db->update('citas', $data);  
+                $respuesta['error']=false;
+                $respuesta['mensaje']="Se ha modificado la fecha de la cita";                 
+            }                               
+            else
+            {
+                $respuesta['error']=true;
+                $respuesta['mensaje']="El doctor no tiene disponibilidad ese dia";                
+            }
+        }
+        else
+        {
+            $respuesta['error']=true;
+            $respuesta['mensaje']="No se encontro la cita";
+        }
+        
+        return $respuesta;
+    }
 }
