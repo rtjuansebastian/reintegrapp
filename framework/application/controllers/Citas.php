@@ -31,4 +31,13 @@ class Citas extends CI_Controller {
         $respuesta=$this->citas_model->modificar_cita($data);
         echo json_encode($respuesta);        
     }
+    
+    public function cancelar_cita()
+    {
+        $cita=  $this->input->post("cita");
+        $this->citas_model->cambiar_estado_cita($cita,"3");
+        $respuesta["error"]=false;
+        $respuesta["mensaje"]="La cita ha sido cancelada";
+        echo json_encode($respuesta);            
+    }
 }

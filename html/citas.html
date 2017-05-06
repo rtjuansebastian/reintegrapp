@@ -171,6 +171,31 @@ and open the template in the editor.
                         }
                     }
                 });
+            });
+            
+            $(document).on("click","#cancelar_cita",function(){
+            if(confirm('¿Estas seguro de cancelar esta cita?'))
+            {
+                var cita=$(this).data("cita");                
+                $.ajax(
+                {
+                    type: "POST",
+                    data: {cita:cita},
+                    url: "http://gincomex.com/reintegrapp/framework/index.php/citas/cancelar_cita",
+                    success: function (data)
+                    {
+                        var result = $.parseJSON(data);
+                        if (result.error === false)
+                        {
+                            $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
+                            setTimeout("location.href='citas.html'", 2000);
+                        } else
+                        {
+                            $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
+                        }
+                    }
+                });
+            }   
             });            
         });
     </script>
