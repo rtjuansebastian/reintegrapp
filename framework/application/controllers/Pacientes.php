@@ -7,6 +7,7 @@ class Pacientes extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("pacientes_model");
+        $this->load->model("diagnosticos_model");
      }
      
      
@@ -17,8 +18,9 @@ class Pacientes extends CI_Controller {
      
      public function consultar_paciente(){
          $cedula = $this->input->get('cedula');
-         $paciente = $this->pacientes_model->consultar_paciente($cedula);
-         echo json_encode($paciente);
+         $respuesta['paciente'] = $this->pacientes_model->consultar_paciente($cedula);
+         $respuesta['resultados'] =$this->diagnosticos_model->consultar_resultados_diagnosticos($cedula);
+         echo json_encode($respuesta);
      }
      
      public function buscar_paciente(){

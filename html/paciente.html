@@ -50,24 +50,36 @@ and open the template in the editor.
             <!--</nav>               -->
             <div class="row">               
                 <div class="col-md-6 col-md-offset-3">
-                    <img src="package-assets/img/logo.png" heigth="20" width="100%"/>  
-                    <h2>Cédula</h2>
+                    <img src="package-assets/img/logo.png" heigth="20" width="100%"/>
+                    <h1>Datos del paciente</h1>
+                    <h3>Cédula</h3>
                     <p id = "cedula"></p>
-                    <h2>Nombres</h2>
+                    <h3>Nombres</h3>
                     <p id = "nombres"></p>                   
-                    <h2>Genero</h2>
+                    <h3>Genero</h3>
                     <p id = "genero"></p>                     
-                    <h2>Edad</h2>
+                    <h3>Edad</h3>
                     <p id = "edad"></p>                       
-                    <h2>Estado Civil</h2>
+                    <h3>Estado Civil</h3>
                     <p id = "estado"></p>  
-                    <h2>Escolaridad</h2>
+                    <h3>Escolaridad</h3>
                     <p id = "escolaridad"></p>                    
-                    <h2>Tiempo Militancia</h2>
+                    <h3>Tiempo Militancia</h3>
                     <p id = "tiempoMilitancia"></p> 
-                    <h2>Fecha Reintegracion</h2>
+                    <h3>Fecha Reintegracion</h3>
                     <p id = "fechaReintegracion"></p> 
-
+                    <h1>Resultados Test</h1>
+                    <table class="table">
+                        <thead>
+                            <th>Fecha</th>
+                            <th>Doctor</th>
+                            <th>Resultado</th>
+                            <th>Puntaje</th>
+                        </thead>
+                        <tbody id="resultados_test">
+                            
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -94,16 +106,67 @@ and open the template in the editor.
                             url: "http://gincomex.com/reintegrapp/framework/index.php/pacientes/consultar_paciente?cedula="+cedula,
                             success: function (data)
                             {
-                                var result = $.parseJSON(data);
-                                console.log (result);
-                                $('#cedula').html(result.cedula);
-                                $('#nombres').html(result.nombres + " " + result.apellidos);
-                                $('#genero').html(result.genero);
-                                $('#edad').html(result.edad);
-                                $('#estado').html(result.estado);
-                                $('#escolaridad').html(result.nivel);
-                                $('#tiempoMilitancia').html(result.tiempo_militancia + ' Años');                                 
-                                $('#fechaReintegracion').html(result.fecha_reintegracion); 
+                                console.log(data);
+                                var result = $.parseJSON(data);                                
+                                $('#cedula').html(result.paciente.cedula);
+                                $('#nombres').html(result.paciente.nombres + " " + result.paciente.apellidos);
+                                $('#genero').html(result.paciente.genero);
+                                $('#edad').html(result.paciente.edad);
+                                $('#estado').html(result.paciente.estado);
+                                $('#escolaridad').html(result.paciente.nivel);
+                                $('#tiempoMilitancia').html(result.paciente.tiempo_militancia + ' Años');                                 
+                                $('#fechaReintegracion').html(result.paciente.fecha_reintegracion); 
+                                
+                                var html="";
+                                
+                                $.each(result.resultados,function(key,value){
+                                    
+                                    var chaside= {c:value.c, h:value.h, a:value.a, s:value.s, i:value.i, d:value.d, e:value.e};
+                                    var mayor=0;
+                                    var resultado="";
+                                    var area="";
+                                    $.each(chaside,function(key,value){
+                                        if(value>parseInt(mayor)){
+                                            mayor=value;
+                                            resultado=key;
+                                        }
+                                    });
+
+                                    switch (resultado) {
+                                       case 'c':
+                                           area="Carreras Administrativas y Contables";
+                                           break;
+                                       case 'h':
+                                           area="Carreras Humanísticas y Sociales";
+                                           break;
+                                       case 'a':
+                                           area="Carreras Artísticas";
+                                           break;
+                                       case 's':
+                                           area="Carreras de Medicina y Ciencias de la Salud";
+                                           break;
+                                       case 'i':
+                                           area="Carreras de Ingeniería y Computación";
+                                           break;
+                                       case 'd':
+                                           area="Carreras de Defensa y Seguridad";
+                                           break;  
+                                       case 'e':
+                                           area="Carreras de Ciencias Exactas y Agrarias";
+                                           break;                         
+                                       default:
+                                           break;
+                                    }                                                            
+                                    
+                                    html=html+  "<tr>"+
+                                                    "<td>"+value.fecha+"</td>"+
+                                                    "<td>"+value.doctor+"</td>"+
+                                                    "<td>"+area+"</td>"+
+                                                    "<td>"+mayor+"</td>"+
+                                                "</tr>";
+                                });
+                                
+                                $("#resultados_test").html(html);
                              }
                         }); 
     

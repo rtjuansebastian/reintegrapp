@@ -64,4 +64,24 @@ class Diagnosticos_model extends CI_Model
         
         return $diagnostico;        
     }
+    
+    public function consultar_resultados_diagnosticos($cedula)
+    {
+        $resultados=array();
+        $this->db->select("citas.id as cita, citas.fecha, citas.estado, estados_cita.estado, doctores.nombre as doctor, diagnostico.id as diagnostico, diagnostico.diagnostico_test as diagnostico_test, diagnosticos_test.c, diagnosticos_test.h, diagnosticos_test.a, diagnosticos_test.s, diagnosticos_test.i, diagnosticos_test.d, diagnosticos_test.e");
+        $this->db->from("citas");
+        $this->db->join("estados_cita","estados_cita.id=citas.estado");
+        $this->db->join("doctores","doctores.cedula=citas.doctor");
+        $this->db->join("diagnostico","diagnostico.cita=citas.id");
+        $this->db->join("diagnosticos_test","diagnosticos_test.id=diagnostico.diagnostico_test");
+        $this->db->where("citas.paciente",$cedula);
+        $query=$this->db->get();
+        
+        foreach ($query->result_array() as $row)
+        {
+            $resultados[$row['cita']]=$row;
+        }
+        
+        return $resultados;
+    }
 }
