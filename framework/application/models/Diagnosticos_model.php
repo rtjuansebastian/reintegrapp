@@ -40,6 +40,7 @@ class Diagnosticos_model extends CI_Model
                 
         if($this->db->insert('diagnostico', $data))
         {
+            $respuesta['diagnostico']=  $this->db->insert_id();
             $respuesta['error'] = false;
             $respuesta['mensaje'] = "El diagnostico ha sido almacenado";            
         }
@@ -52,7 +53,17 @@ class Diagnosticos_model extends CI_Model
         return $respuesta;
     }
     
-    public function consultar_diagnostico($cita)
+    public function enviar_diagnostico_comentarios($diagnostico,$comentarios)
+    {
+        $data = array(
+           'diagnostico' => $diagnostico ,
+           'observacion' => $comentarios 
+        );
+
+        $this->db->insert('observaciones_diagnostico', $data);         
+    }
+
+        public function consultar_diagnostico($cita)
     {
         $diagnostico=array();
         $this->db->select("diagnostico.id, diagnostico.diagnostico_test, diagnosticos_test.c, diagnosticos_test.h, diagnosticos_test.a, diagnosticos_test.s, diagnosticos_test.i, diagnosticos_test.d, diagnosticos_test.e");

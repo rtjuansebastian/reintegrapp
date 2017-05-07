@@ -105,7 +105,7 @@ and open the template in the editor.
                 var fecha=$(this).data("fecha");
                 switch (estado) {
                        case 'Solicitada':
-                           var html='<div class="form-group"><a href="cita_test.html?cita='+cita+'" class="btn btn-sm btn-default glyphicon glyphicon-pencil">realizar test </a></div>'+
+                           var html='<div class="form-group"><a href="cita_test.html?cita='+cita+'&pregunta=0" class="btn btn-sm btn-default glyphicon glyphicon-pencil">realizar test </a></div>'+
                                     '<div class="form-group"><button id="modificar_cita" data-cita="'+cita+'" data-fecha="'+fecha+'" class="btn btn-sm btn-default glyphicon glyphicon-calendar">Cambiar fecha </button></div>'+
                                     '<div class="form-group"><button id="cancelar_cita" data-cita="'+cita+'" class="btn btn-sm btn-default  glyphicon glyphicon-remove">Cancelar cita </button></div>';
                             $("#error").html(html);

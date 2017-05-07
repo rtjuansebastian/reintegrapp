@@ -23,10 +23,13 @@ class Diagnosticos extends CI_Controller {
     {
         $data=  $this->input->get();
         unset($data['cita']);
+        unset($data['comentarios']);
         $cita=  $this->input->get("cita");
+        $comentarios=  $this->input->get("comentarios");
         $this->citas_model->cambiar_estado_cita($cita,"2");
-        $diagnostico_test=$this->diagnosticos_model->enviar_diagnostico_test($data);
+        $diagnostico_test=$this->diagnosticos_model->enviar_diagnostico_test($data);        
         $respuesta=$this->diagnosticos_model->enviar_diagnostico($cita,$diagnostico_test);
+        $this->diagnosticos_model->enviar_diagnostico_comentarios($respuesta['diagnostico'],$comentarios);
         echo json_encode($respuesta);
     }
     

@@ -78,35 +78,18 @@ and open the template in the editor.
             else{
                 var chaside={c:0,h:0,a:0,s:0,i:0,d:0,e:0};
             }
-            
-            //console.log(chaside);
+                        
             
             var cita = $.getURLParam("cita");
             var pregunta = $.getURLParam("pregunta");            
+            console.log(pregunta);
             var html='';
             if(pregunta==="100"){
-                $.ajax({
-                    type: "GET",
-                    url: "http://gincomex.com/reintegrapp/framework/index.php/diagnosticos/enviar_diagnostico?cita="+cita,
-                    data: chaside,
-                    success: function (data)
-                    {
-                        //$.removeCookie('chaside');
-                        storage.removeItem("chaside");
-                        var result = $.parseJSON(data);                        
-                        if (result.error === false)
-                        {
-                            $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
-                            $('.bs-example-modal-sm').modal('show');
-                            setTimeout("location.href='citas.html'", 4000);
-                        } 
-                        else
-                        {
-                            $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
-                            $('.bs-example-modal-sm').modal('show');
-                        }                        
-                    }                
-                });                
+                
+                html='<textarea class="form-control" rows="3" id="comentarios"></textarea>'+
+                '<button id="enviar_test" class="btn btn-default">Guardar test</button>';                
+                $("#preguntas").html(html);
+                $("#continuar").hide();
             }
             else
             {
@@ -143,7 +126,35 @@ and open the template in the editor.
                 var dataToStore = JSON.stringify(chaside);
                 storage.setItem("chaside",dataToStore);
                 location.href= 'cita_test.html?cita='+cita+'&pregunta='+pregunta+'';
-            });                        
+            });
+            
+            $(document).on("click","#enviar_test",function(){
+                
+                var comentarios=$("#comentarios").val();
+                
+                $.ajax({
+                    type: "GET",
+                    url: "http://gincomex.com/reintegrapp/framework/index.php/diagnosticos/enviar_diagnostico?cita="+cita+"&comentarios="+comentarios,
+                    data: chaside,
+                    success: function (data)
+                    {
+                        //$.removeCookie('chaside');
+                        storage.removeItem("chaside");
+                        var result = $.parseJSON(data);                        
+                        if (result.error === false)
+                        {
+                            $("#error").html("<p class=\"bg-success\">" + result.mensaje + "</p>");
+                            $('.bs-example-modal-sm').modal('show');
+                            setTimeout("location.href='citas.html'", 4000);
+                        } 
+                        else
+                        {
+                            $("#error").html("<p class=\"bg-danger\">" + result.mensaje + "</p>");
+                            $('.bs-example-modal-sm').modal('show');
+                        }                        
+                    }                
+                });                
+            });
             
         });
         
