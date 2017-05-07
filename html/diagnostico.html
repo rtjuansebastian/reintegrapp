@@ -28,6 +28,9 @@ and open the template in the editor.
                 <div class="col-md-6 col-md-offset-3">
                     <img src="package-assets/img/logo.png" heigth="20" width="100%"/>                           
                     <h2 id="respuesta">Cargando...</h2>
+                    <br>
+                    <h2>Observaciones</h2>
+                    <p id="comentarios">No hay observaciones</p>
                 </div>
             </div>
         </div>      
@@ -54,7 +57,7 @@ and open the template in the editor.
                 success: function (data)
                 {
                     var result = $.parseJSON(data);                        
-                    var chaside= {c:result.c, h:result.h, a:result.a, s:result.s, i:result.i, d:result.d, e:result.e};
+                    var chaside= {c:result.diagnostico.c, h:result.diagnostico.h, a:result.diagnostico.a, s:result.diagnostico.s, i:result.diagnostico.i, d:result.diagnostico.d, e:result.diagnostico.e};
                     var mayor=0;
                     var resultado="";
                     var area="";
@@ -93,6 +96,13 @@ and open the template in the editor.
                     
                     var respuesta="Durante esta cita, luego de aplicar el test el area con mas puntaje fue <strong>"+area+"</strong> con un total de "+mayor+" ptos.";
                     $("#respuesta").html(respuesta);
+                    
+                    $.each(result.observaciones,function(key,value){
+                        if(value.observacion!==""){
+                            $("#comentarios").html("");   
+                            $("#comentarios").append(value.observacion);   
+                        }                    
+                    });                    
                 }                
             });                 
         });

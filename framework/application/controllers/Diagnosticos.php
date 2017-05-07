@@ -36,8 +36,9 @@ class Diagnosticos extends CI_Controller {
     public function consultar_diagnostico()
     {
         $cita=  $this->input->get("cita");
-        $diagnostico=$this->diagnosticos_model->consultar_diagnostico($cita);
-        echo json_encode($diagnostico);
+        $respuesta['diagnostico']=$this->diagnosticos_model->consultar_diagnostico($cita);
+        $respuesta['observaciones']=$this->diagnosticos_model->consultar_observaciones_diagnostico($cita);
+        echo json_encode($respuesta);
     }
     
     public function consultar_resultados()

@@ -63,7 +63,7 @@ class Diagnosticos_model extends CI_Model
         $this->db->insert('observaciones_diagnostico', $data);         
     }
 
-        public function consultar_diagnostico($cita)
+    public function consultar_diagnostico($cita)
     {
         $diagnostico=array();
         $this->db->select("diagnostico.id, diagnostico.diagnostico_test, diagnosticos_test.c, diagnosticos_test.h, diagnosticos_test.a, diagnosticos_test.s, diagnosticos_test.i, diagnosticos_test.d, diagnosticos_test.e");
@@ -76,6 +76,22 @@ class Diagnosticos_model extends CI_Model
         return $diagnostico;        
     }
     
+    public function consultar_observaciones_diagnostico($cita)
+    {
+        $observaciones=array();
+        $this->db->select("observaciones_diagnostico.id, observaciones_diagnostico.observacion");
+        $this->db->from("diagnostico");
+        $this->db->join("observaciones_diagnostico","diagnostico.id=observaciones_diagnostico.diagnostico");
+        $this->db->where("diagnostico.cita",$cita);
+        $query=$this->db->get();
+        foreach ($query->result_array() as $row)
+        {
+            $observaciones[$row['id']]=$row;
+        }
+        
+        return $observaciones;        
+    }
+
     public function consultar_resultados_diagnosticos($cedula)
     {
         $resultados=array();
