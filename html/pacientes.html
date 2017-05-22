@@ -103,7 +103,7 @@ and open the template in the editor.
                     var result = $.parseJSON(data);
                     var html = "";
                    $.each(result, function( index, value ) {
-                       html += "<tr><td>"+ value.nombres +" "+ value.apellidos +"</td><td><a href = \"http://localhost/reintegrapp/html/paciente.html?cedula="+value.cedula+"\" class=\"btn btn-default\">Ver</a></td></tr>";
+                       html += "<tr><td>"+ value.nombres +" "+ value.apellidos +"</td><td><a href = \"paciente.html?cedula="+value.cedula+"\" class=\"btn btn-default\">Ver</a></td></tr>";
                     });
                     $('#pacientes').html(html);
                 }

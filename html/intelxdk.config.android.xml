@@ -7,6 +7,9 @@
 <name>reintegrapp</name>
 <content src="index.html"/>
 <access origin="*"/>
+<icon platform="android" src="package-assets/logo36x36.png" density="ldpi" width="36" height="36"/>
+<icon platform="android" src="package-assets/logo48x48.png" density="mdpi" width="48" height="48"/>
+<icon platform="android" src="package-assets/logo72x72.png" density="hdpi" width="72" height="72"/>
 <icon platform="android" src="package-assets/logo96x96.png" density="xhdpi" width="96" height="96"/>
 <intelxdk:plugin intelxdk:name="Cordova Network Whitelist Plugin (added by Intel XDK)" intelxdk:value="cordova-plugin-whitelist" intelxdk:version="1.2.2"/>
 <preference name="android-minSdkVersion" value="14"/>
