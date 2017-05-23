@@ -1,6 +1,6 @@
 {
   "project": {
-    "currentBuildConfiguration": "WebApp",
+    "currentBuildConfiguration": "WP81",
     "projectFiles": {},
     "projectDirectories": {},
     "projectSettingsVersion": "3.0.0"
@@ -13,7 +13,7 @@
       "tinyhippos-geosettings": {
         "id": "tinyhippos-geosettings",
         "key": "geosettings",
-        "value": "{\"position\":{\"latitude\":43.481879826508624,\"longitude\":-80.5382506773678,\"altitude\":100,\"accuracy\":150,\"altitudeAccuracy\":80,\"heading\":0,\"speed\":0,\"timeStamp\":\"new Date(1494116939639)\"},\"delay\":\"0\",\"timeout\":false}",
+        "value": "{\"position\":{\"latitude\":43.481879826508624,\"longitude\":-80.5382506773678,\"altitude\":100,\"accuracy\":150,\"altitudeAccuracy\":80,\"heading\":0,\"speed\":0,\"timeStamp\":\"new Date(1495470303587)\"},\"delay\":\"0\",\"timeout\":false}",
         "prefix": "tinyhippos-"
       },
       "tinyhippos-geo-map-zoom-key": {

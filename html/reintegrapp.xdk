@@ -2,10 +2,10 @@
   "project": {
     "creationData": {
       "type": "Import",
-      "projectTypeName": "com.intel.xdk.projecttype.webapp",
+      "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
       "projectGuid": "32e7148f-1ce0-4794-84e1-81f1bb8ff6dc",
-      "lastModifiedDate": 1494117536928,
+      "lastModifiedDate": 1495471762344,
       "creationDate": 1492206424546
     },
     "testDirectory": "test",
@@ -33,18 +33,19 @@
     "buildConfigurations": {
       "Android": {
         "platform_": "android",
-        "runtime_": "W3C on Crosswalk",
+        "runtime_": "Crosswalk with Cordova 3.x",
         "name_": "Android",
         "preferences_": {
           "android-minSdkVersion": "14",
           "android-targetSdkVersion": "23",
           "android-installLocation": "auto",
-          "android-signed": true
+          "android-signed": true,
+          "AndroidLaunchMode": "singleTop"
         },
         "isActive_": true,
         "certificateId_": "4zPTGl0SV0Wtt1PgN1-EQg2",
         "appName_": "reintegrapp",
-        "appID_": "not.yet.specified",
+        "appID_": "udistrital.reintegrapp",
         "appAccess_": {
           "mode": "whitelist",
           "network": [
@@ -81,21 +82,23 @@
           }
         ],
         "splashes_": [],
-        "appVersion_": "0.0.1",
+        "appVersion_": "1.0",
         "appVersionCode_": "1",
         "signed_": true,
         "crosswalkVersion_": "19",
-        "cordovaCLIVersion_": "6.2.0"
+        "cordovaCLIVersion_": "6.2.0",
+        "appDescription_": "Esta aplicación permite a profesionales en Salud  aplicar el Test CHASIDE a los desmovilizados de los grupos armados.",
+        "appAuthor_": "Universidad Distrital Francisco Jose de Caldas"
       },
       "iOS": {
         "platform_": "ios",
-        "runtime_": "W3C on Cordova",
+        "runtime_": "Cordova 3.x",
         "name_": "iOS",
         "preferences_": {
           "deployment-target": "8.0",
           "ios-configuration": "adhoc"
         },
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appName_": "reintegrapp",
         "appID_": "not.yet.specified",
@@ -116,10 +119,10 @@
       },
       "Windows8": {
         "platform_": "windows8",
-        "runtime_": "W3C on Cordova",
+        "runtime_": "Cordova 3.x",
         "name_": "Windows8",
         "preferences_": {},
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appName_": "reintegrapp",
         "appID_": "not.yet.specified",
@@ -142,7 +145,7 @@
         "runtime_": "W3C",
         "name_": "WebApp",
         "preferences_": {},
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appVersion_": "0.0.1"
       },
@@ -151,7 +154,7 @@
         "runtime_": "W3C on Firefox OS",
         "name_": "Firefox",
         "preferences_": {},
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appVersion_": "0.0.1"
       },
@@ -160,26 +163,27 @@
         "runtime_": "W3C on Chrome OS",
         "name_": "Chrome",
         "preferences_": {},
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appName_": "reintegrapp",
         "appID_": "not.yet.specified",
         "icons_": [],
         "splashes_": [],
-        "appVersion_": "0.0.1"
+        "appVersion_": "1.0",
+        "appDescription_": "Esta aplicación permite a profesionales en Salud  aplicar el Test CHASIDE a los desmovilizados de los grupos armados."
       },
       "Facebook": {
         "platform_": "facebook",
         "runtime_": "W3C on Facebook",
         "name_": "Facebook",
         "preferences_": {},
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appVersion_": "0.0.1"
       },
       "WP81": {
         "platform_": "wp81",
-        "runtime_": "W3C on Cordova",
+        "runtime_": "Cordova 3.x",
         "name_": "WP81",
         "preferences_": {},
         "isActive_": true,
@@ -204,6 +208,8 @@
     "serviceMethods": [],
     "sourceDirectory": "",
     "startFile": "index.html",
-    "projectSettingsVersion": "3.0.0"
+    "projectSettingsVersion": "3.0.0",
+    "cordovaPluginsDirectory": "plugins",
+    "cordovaPlugins": []
   }
 }
